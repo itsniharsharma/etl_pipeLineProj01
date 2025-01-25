@@ -1,9 +1,10 @@
 from airflow import DAG
-from airflow.providers.https.hooks.http import HttpHook
-from airflow.provider.postgres.hooks.postgres import PostgresHook
+from airflow.providers.http.hooks.http import HttpHook
+from airflow.providers.postgres.hooks.postgres import PostgresHook
 from airflow.decorators import task
 from airflow.utils.dates import days_ago
-
+import requests
+import json
 
 ### LAT AND LONG OF CHICAGO
 LATITUDE = '41.881832'
@@ -22,7 +23,7 @@ default_args={
 with DAG(dag_id='etl_weather',
          default_args=default_args,
          schedule_interval='@daily',
-         catchup=False) as dags:
+         catchup=False) as dag:
     
     @task()
     def extract_weather_data():
@@ -73,7 +74,7 @@ with DAG(dag_id='etl_weather',
                 temperature FLOAT,
                 wind_speed FLOAT,
                 wind_direction FLOAT,
-                weather_code INT
+                weather_code INT,
                 timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
             """
