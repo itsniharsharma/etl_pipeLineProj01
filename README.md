@@ -34,7 +34,7 @@ CREATE TABLE weather_data(
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )
 
-ETL Pipeline
+## ETL Pipeline
 Extract
 
 Source: Open-Meteo API
